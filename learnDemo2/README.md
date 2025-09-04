@@ -84,8 +84,44 @@ lib/
 - [Provider状态管理](https://pub.dev/packages/provider)
 - [Dart异步编程](https://dart.dev/codelabs/async-await)
 
+## 多语言支持
+
+本项目使用Flutter Intl插件实现多语言支持，支持英语、简体中文和繁体中文三种语言。
+
+### 生成本地化文件
+
+项目根目录下提供了`generate_locales.bat`脚本，用于生成本地化文件：
+
+```bash
+# Windows下运行
+./generate_locales.bat
+
+# Mac/Linux下运行
+flutter pub global activate intl_utils
+flutter pub get
+flutter pub run intl_utils:generate
+```
+
+### 如何添加新的语言
+
+1. 在`lib/src/common/l10n/`目录下创建新的ARB文件，文件名格式为`app_{languageCode}.arb`或`app_{languageCode}_{countryCode}.arb`
+2. 复制`app_en.arb`文件的内容到新创建的文件中，并提供相应语言的翻译
+3. 更新`l10n.yaml`文件中的`supported-locales`列表，添加新的语言代码
+4. 运行`generate_locales.bat`脚本来生成本地化代码
+
+### 如何在代码中使用本地化字符串
+
+```dart
+// 获取本地化实例
+final localizations = AppLocalizations.of(context);
+
+// 使用本地化字符串
+Text(localizations?.appName ?? 'Default Text');
+```
+
 ## 注意事项
 
 - 本项目使用Provider作为状态管理库，这是Flutter中实现MVVM模式的常用方式
 - 为了简化，项目中使用了模拟数据和延迟操作来模拟网络请求
 - 实际项目中，建议添加错误处理、日志记录等功能
+- 多语言支持使用Flutter Intl插件自动生成代码，而不是手动加载ARB文件

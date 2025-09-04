@@ -48,5 +48,8 @@
   "notificationSettings": "Notification Settings",
   "changeAvatar": "Change Avatar",
   "confirmLogoutTitle": "Logout",
-  "confirmLogoutMessage": "Are you sure you want to logout?"
+  "confirmLogoutMessage": "Are you sure you want to logout?",
+  "pageNotFound": "Page Not Found",
+  "pageNotFoundMessage": "Cannot find page",
+  "backToHome": "Back to Home"
 }

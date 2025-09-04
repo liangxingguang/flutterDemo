@@ -48,5 +48,8 @@
   "notificationSettings": "通知设置",
   "changeAvatar": "更换头像",
   "confirmLogoutTitle": "退出登录",
-  "confirmLogoutMessage": "确定要退出登录吗？"
+  "confirmLogoutMessage": "确定要退出登录吗？",
+  "pageNotFound": "页面未找到",
+  "pageNotFoundMessage": "无法找到页面",
+  "backToHome": "返回首页"
 }

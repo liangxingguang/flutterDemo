@@ -48,5 +48,8 @@
   "notificationSettings": "通知設定",
   "changeAvatar": "更換頭像",
   "confirmLogoutTitle": "退出登錄",
-  "confirmLogoutMessage": "確定要退出登錄嗎？"
+  "confirmLogoutMessage": "確定要退出登錄嗎？",
+  "pageNotFound": "頁面未找到",
+  "pageNotFoundMessage": "無法找到頁面",
+  "backToHome": "返回首頁"
 }

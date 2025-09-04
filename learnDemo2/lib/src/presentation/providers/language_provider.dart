@@ -1,6 +1,7 @@
 // 语言提供者类
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/l10n/app_localizations.dart';
 
@@ -45,15 +46,40 @@ class LanguageProvider extends ChangeNotifier {
           _currentLocale = locale;
         }
       } else {
-        // 如果没有保存的偏好，使用系统语言或默认语言
-        // 在实际项目中，这里应该检查系统语言
-        _currentLocale = const Locale('en');
+        // 如果没有保存的偏好，使用系统语言
+        _currentLocale = await _getSystemLocale();
       }
     } catch (e) {
       print('Failed to load language preference: $e');
       // 加载失败时使用默认语言
       _currentLocale = const Locale('en');
     }
+  }
+
+  // 获取系统语言
+  Future<Locale> _getSystemLocale() async {
+    try {
+      // 获取设备首选语言
+      final systemLocales = WidgetsBinding.instance.window.locales;
+      if (systemLocales.isNotEmpty) {
+        // 检查系统语言是否在我们支持的语言列表中
+        for (final locale in systemLocales) {
+          // 先检查完整的语言代码（语言+地区）
+          if (supportedLocales.contains(locale)) {
+            return locale;
+          }
+          // 再检查仅语言代码
+          final languageOnlyLocale = Locale(locale.languageCode);
+          if (supportedLocales.contains(languageOnlyLocale)) {
+            return languageOnlyLocale;
+          }
+        }
+      }
+    } catch (e) {
+      print('Failed to get system locale: $e');
+    }
+    // 如果无法获取系统语言或系统语言不受支持，返回默认语言
+    return const Locale('en');
   }
 
   // 保存语言偏好
