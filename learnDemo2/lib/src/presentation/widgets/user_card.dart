@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../domain/entities/user.dart';
-import '../../../common/l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserCard extends StatelessWidget {
   final dynamic user; // 在实际项目中，这里应该使用具体的User类型

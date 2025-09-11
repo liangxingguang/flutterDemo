@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../providers/user_provider.dart';
 import '../../widgets/user_card.dart';
 import '../../widgets/add_user_dialog.dart';
+import '../../../common/constants/app_constants.dart';
 import '../../../common/utils/common_utils.dart';
-import '../../../common/l10n/app_localizations.dart';
+import '../../../common/extensions/context_extensions.dart';
 
 class UserListScreen extends StatefulWidget {
   const UserListScreen({Key? key}) : super(key: key);
@@ -27,25 +29,24 @@ class _UserListScreenState extends State<UserListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
     
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations?.pageTitleUserList ?? 'User List'),
+        title: Text(context.localizations.pageTitleUserList),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
               Provider.of<UserProvider>(context, listen: false).loadUsers();
             },
-            tooltip: localizations?.buttonRefresh ?? 'Refresh',
+            tooltip: context.localizations.buttonRefresh,
           ),
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.pushNamed(context, '/profile');
             },
-            tooltip: localizations?.pageTitleProfile ?? 'Profile',
+            tooltip: context.localizations.pageTitleProfile,
           ),
         ],
       ),
@@ -68,7 +69,7 @@ class _UserListScreenState extends State<UserListScreen> {
                     onPressed: () {
                       provider.loadUsers();
                 },
-                child: Text(localizations?.buttonRetry ?? 'Retry'),
+                child: Text(context.localizations.buttonRetry),
               ),
                 ],
               ),
@@ -84,10 +85,10 @@ class _UserListScreenState extends State<UserListScreen> {
                 [
                   const Icon(Icons.person_off, size: 80, color: Colors.grey),
                   const SizedBox(height: 16),
-                  Text(localizations?.emptyText ?? 'No data available'),
+                  Text(context.localizations.emptyText),
                   ElevatedButton(
                     onPressed: () => _showAddUserDialog(context),
-                    child: Text(localizations?.buttonAdd ?? 'Add User'),
+                    child: Text(context.localizations.buttonAdd),
                   ),
                 ],
               ),
@@ -112,7 +113,7 @@ class _UserListScreenState extends State<UserListScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddUserDialog(context),
         child: const Icon(Icons.add),
-        tooltip: localizations?.buttonAdd ?? 'Add User',
+        tooltip: context.localizations.buttonAdd,
       ),
     );
   }
@@ -128,7 +129,10 @@ class _UserListScreenState extends State<UserListScreen> {
   // 显示编辑用户对话框
   void _showEditUserDialog(BuildContext context, dynamic user) {
     // 在实际项目中，这里应该跳转到编辑页面或显示编辑对话框
-    CommonUtils.showSnackbar(context, '编辑用户功能尚未实现');
+    CommonUtils.showSnackbar(
+      context, 
+      context.localizations.editUserFunctionNotImplemented
+    );
   }
 
   // 显示删除确认对话框
@@ -136,8 +140,8 @@ class _UserListScreenState extends State<UserListScreen> {
     final localizations = AppLocalizations.of(context);
     CommonUtils.showConfirmationDialog(
       context, 
-      localizations?.confirmDeleteTitle ?? 'Confirm Delete', 
-      localizations?.confirmDeleteMessage ?? 'Are you sure you want to delete this user?',
+      context.localizations.confirmDeleteTitle, 
+      context.localizations.confirmDeleteMessage,
     ).then((confirmed) {
       if (confirmed) {
         Provider.of<UserProvider>(context, listen: false).deleteUser(userId);

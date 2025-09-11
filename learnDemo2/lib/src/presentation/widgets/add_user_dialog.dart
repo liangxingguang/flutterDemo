@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../providers/user_provider.dart';
 import '../../../common/utils/common_utils.dart';
-import '../../../common/l10n/app_localizations.dart';
 
 class AddUserDialog extends StatefulWidget {
   const AddUserDialog({Key? key}) : super(key: key);

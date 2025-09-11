@@ -2,6 +2,7 @@
 
 import '../entities/user.dart';
 import '../repositories/user_repository.dart';
+import '../exceptions/app_exception.dart';
 
 // 用例（UseCase）是领域层的核心组件，封装了单一的业务操作
 // GetUsersUsecase负责获取用户列表的业务逻辑
@@ -17,11 +18,25 @@ class GetUsersUsecase {
   Future<List<User>> execute() async {
     try {
       // 调用Repository获取用户列表
-      return await _userRepository.getUsers();
+      final users = await _userRepository.getUsers();
+      
+      // 确保返回非空列表
+      return users ?? [];
     } catch (e) {
-      // 可以在这里添加业务逻辑相关的错误处理
+      // 添加更具体的错误处理逻辑
       print('获取用户列表用例执行失败: $e');
-      rethrow;
+      
+      // 如果是已有的AppException，直接抛出
+      if (e is AppException) {
+        rethrow;
+      }
+      
+      // 将其他异常包装为AppException
+      throw BusinessException(
+        code: AppErrorCode.operationFailed,
+        message: 'Failed to fetch users',
+        details: {'originalError': e.toString()},
+      );
     }
   }
 }

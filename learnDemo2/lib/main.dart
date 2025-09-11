@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'src/config/app_theme.dart';
 import 'src/routes/app_router.dart';
 import 'src/presentation/providers/user_provider.dart';
 import 'src/presentation/providers/language_provider.dart';
-import 'src/common/l10n/app_localizations.dart';
+import 'src/common/l10n/default_localizations.dart';
 
 void main() {
+  // 初始化默认本地化类
+  DefaultLocalizations.instance.initialize();
+  
   runApp(
     // 使用Provider包裹整个应用，提供全局状态管理
     MultiProvider(
@@ -37,7 +41,7 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (context) => AppLocalizations.of(context)?.appName ?? 'Flutter MVVM + Repository Demo',
       
       // 配置本地化代理和支持的语言
-      localizationsDelegates: AppLocalizationsDelegates.delegates,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: languageProvider.currentLocale,
       

@@ -1,11 +1,11 @@
 // 应用路由配置
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../routes/route_paths.dart';
 import '../presentation/screens/home/user_list_screen.dart';
 import '../presentation/screens/profile/profile_screen.dart';
 import '../presentation/screens/settings/settings_screen.dart';
-import '../common/l10n/app_localizations.dart';
 
 class AppRouter {
   // 路由路径常量

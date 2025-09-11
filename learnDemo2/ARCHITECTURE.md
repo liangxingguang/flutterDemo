@@ -395,7 +395,8 @@ abstract class UserRepository {
 
   // 删除用户
   Future<bool> deleteUser(int id);
-}```
+}
+```
 
 #### UseCases（用例）
 - 在`lib/src/domain/usecases/`目录下
@@ -423,6 +424,15 @@ class GetUsersUsecase {
   }
 }
 ```
+
+#### 异常处理 (Exceptions)
+为了更好地处理业务逻辑错误并支持多语言，领域层实现了一套自定义异常体系：
+
+1. **错误代码枚举** (`AppErrorCode`)：定义了所有可能的错误类型，如参数验证错误、业务逻辑错误等
+2. **基础异常类** (`AppException`)：所有自定义异常的基类，包含错误代码、消息和详细信息
+3. **特定异常类**：针对不同类型错误的特定异常类，如`ValidationException`（参数验证错误）、`BusinessException`（业务逻辑错误）等
+
+通过这种异常体系，领域层可以抛出包含错误代码的异常，而不是硬编码的错误消息，UI层可以根据错误代码显示本地化的错误消息，从而实现更好的国际化支持。
 
 ### 4. Presentation 层（UI和状态管理层）
 

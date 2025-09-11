@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../common/l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageProvider extends ChangeNotifier {
   // 语言偏好设置的键
@@ -93,7 +93,43 @@ class LanguageProvider extends ChangeNotifier {
   }
 
   // 获取语言显示名称
-  String getLanguageDisplayName(Locale locale) {
+  String getLanguageDisplayName(BuildContext context, Locale locale) {
+    final localizations = AppLocalizations.of(context);
+    if (localizations == null) {
+      // 如果无法获取本地化实例，返回默认显示名称
+      if (locale.languageCode == 'zh') {
+        if (locale.countryCode == 'TW') {
+          return '繁體中文';
+        } else {
+          return '简体中文';
+        }
+      } else if (locale.languageCode == 'en') {
+        return 'English';
+      } else {
+        return locale.languageCode;
+      }
+    }
+
+    // 使用本地化实例获取语言显示名称
+    if (locale.languageCode == 'zh') {
+      if (locale.countryCode == 'TW') {
+        // 为了区分简体和繁体中文，我们需要一个上下文来获取当前语言
+        // 这里我们直接返回固定文本，但在实际应用中，您可能需要在ARB文件中添加特定的键
+        return '繁體中文';
+      } else {
+        return '简体中文';
+      }
+    } else if (locale.languageCode == 'en') {
+      return localizations.english;
+    } else {
+      // 对于其他语言，返回语言代码或在ARB文件中添加相应的翻译
+      return locale.languageCode;
+    }
+  }
+
+  // 为了保持向后兼容性，提供一个不需要context的版本
+  @deprecated
+  String getLanguageDisplayNameDeprecated(Locale locale) {
     if (locale.languageCode == 'zh') {
       if (locale.countryCode == 'TW') {
         return '繁體中文';
@@ -108,7 +144,14 @@ class LanguageProvider extends ChangeNotifier {
   }
 
   // 获取当前语言的显示名称
+  // 注意：这个方法返回的是固定文本，不支持多语言
+  // 在UI中使用时，建议使用带BuildContext参数的方法
   String get currentLanguageDisplayName {
-    return getLanguageDisplayName(_currentLocale);
+    return getLanguageDisplayNameDeprecated(_currentLocale);
+  }
+
+  // 获取当前语言的显示名称（支持多语言）
+  String getCurrentLanguageDisplayName(BuildContext context) {
+    return getLanguageDisplayName(context, _currentLocale);
   }
 }

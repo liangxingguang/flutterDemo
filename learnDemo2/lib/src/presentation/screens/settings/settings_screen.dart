@@ -2,21 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
-import '../../../common/l10n/app_localizations.dart';
 import '../../../common/utils/common_utils.dart';
+import '../../../common/extensions/context_extensions.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations?.pageTitleSettings ?? 'Settings'),
+        title: Text(context.localizations.pageTitleSettings),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -27,7 +27,7 @@ class SettingsScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16.0),
             child: ListTile(
               leading: const Icon(Icons.language),
-              title: Text(localizations?.language ?? 'Language'),
+              title: Text(context.localizations.language),
               subtitle: Text(languageProvider.currentLanguageDisplayName),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () => _showLanguageSelectionDialog(context, languageProvider),
@@ -40,11 +40,15 @@ class SettingsScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16.0),
             child: ListTile(
               leading: const Icon(Icons.dark_mode),
-              title: Text(localizations?.darkMode ?? 'Dark Mode'),
+              title: Text(context.localizations.darkMode),
               trailing: Switch.adaptive(
                 value: MediaQuery.of(context).platformBrightness == Brightness.dark,
                 onChanged: (value) {
-                  CommonUtils.showSnackbar(context, '主题切换功能尚未实现');
+                  final localizations = AppLocalizations.of(context);
+                  CommonUtils.showSnackbar(
+                    context,
+                    localizations?.themeSwitchFunctionNotImplemented ?? 'Theme switch function not implemented'
+                  );
                 },
               ),
             ),
@@ -56,7 +60,7 @@ class SettingsScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16.0),
             child: ListTile(
               leading: const Icon(Icons.info),
-              title: Text(localizations?.pageTitleAbout ?? 'About Us'),
+              title: Text(context.localizations.pageTitleAbout),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Navigator.pushNamed(context, '/about');
@@ -70,19 +74,18 @@ class SettingsScreen extends StatelessWidget {
 
   // 显示语言选择对话框
   void _showLanguageSelectionDialog(BuildContext context, LanguageProvider languageProvider) {
-    final localizations = AppLocalizations.of(context);
     
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(localizations?.language ?? 'Language'),
+          title: Text(context.localizations.language),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: languageProvider.supportedLocales.map((locale) {
               final isSelected = locale == languageProvider.currentLocale;
               return RadioListTile<Locale>(
-                title: Text(languageProvider.getLanguageDisplayName(locale)),
+                title: Text(languageProvider.getLanguageDisplayNameDeprecated(locale)),
                 value: locale,
                 groupValue: languageProvider.currentLocale,
                 onChanged: (value) {

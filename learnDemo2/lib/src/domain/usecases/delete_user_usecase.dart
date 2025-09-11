@@ -1,6 +1,7 @@
 // 删除用户用例
 
 import '../repositories/user_repository.dart';
+import '../exceptions/app_exception.dart';
 
 class DeleteUserUsecase {
   final UserRepository _userRepository;
@@ -11,7 +12,11 @@ class DeleteUserUsecase {
     try {
       // 参数验证
       if (userId <= 0) {
-        throw ArgumentError('用户ID必须大于0');
+        throw ValidationException(
+          code: AppErrorCode.userIdInvalid,
+          message: 'User ID must be greater than 0',
+          details: {'userId': userId},
+        );
       }
       
       // 调用Repository删除用户

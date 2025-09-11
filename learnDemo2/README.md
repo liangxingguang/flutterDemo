@@ -86,17 +86,18 @@ lib/
 
 ## 多语言支持
 
-本项目使用Flutter Intl插件实现多语言支持，支持英语、简体中文和繁体中文三种语言。
+本项目使用Flutter官方的Flutter Intl插件实现多语言支持，支持英语、简体中文和繁体中文三种语言。
 
 ### 生成本地化文件
 
-项目根目录下提供了`generate_locales.bat`脚本，用于生成本地化文件：
+项目根目录下提供了生成脚本，用于生成本地化文件：
 
 ```bash
 # Windows下运行
 ./generate_locales.bat
 
 # Mac/Linux下运行
+./generate_locales.sh  # 或直接运行命令
 flutter pub global activate intl_utils
 flutter pub get
 flutter pub run intl_utils:generate
@@ -107,16 +108,118 @@ flutter pub run intl_utils:generate
 1. 在`lib/src/common/l10n/`目录下创建新的ARB文件，文件名格式为`app_{languageCode}.arb`或`app_{languageCode}_{countryCode}.arb`
 2. 复制`app_en.arb`文件的内容到新创建的文件中，并提供相应语言的翻译
 3. 更新`l10n.yaml`文件中的`supported-locales`列表，添加新的语言代码
-4. 运行`generate_locales.bat`脚本来生成本地化代码
+4. 运行生成脚本来生成本地化代码
 
 ### 如何在代码中使用本地化字符串
 
+本项目提供了三种使用本地化字符串的方式：
+
+#### 方式1: 使用原始的AppLocalizations
+
 ```dart
-// 获取本地化实例
+// 导入
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+// 获取实例
 final localizations = AppLocalizations.of(context);
 
-// 使用本地化字符串
+// 使用字符串
 Text(localizations?.appName ?? 'Default Text');
+```
+
+#### 方式2: 使用Context扩展方法（推荐）
+
+```dart
+// 导入扩展
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../common/extensions/context_extensions.dart';
+
+// 使用扩展方法
+Text(context.localizations.appName);
+
+// 或者使用更灵活的t方法
+Text(context.t((l) => l.appName));
+```
+
+#### 方式3: 使用本地化常量助手（推荐）
+
+```dart
+// 导入扩展
+import 'package:flutter/material.dart';
+import '../common/extensions/context_extensions.dart';
+
+// 使用常量助手
+Text(context.consts.appName);
+Text(context.consts.pageTitleUserList);
+Text(context.consts.buttonAdd);
+```
+
+### 领域层异常处理
+
+为了更好地处理业务逻辑错误并支持多语言，本项目实现了一套自定义异常体系：
+
+1. **错误代码枚举** (`AppErrorCode`)：定义了所有可能的错误类型
+2. **基础异常类** (`AppException`)：所有自定义异常的基类
+3. **特定异常类**：`ValidationException`, `NetworkException`, `ServerException`等
+
+#### 异常处理最佳实践
+
+在业务逻辑中，应使用特定的异常类而不是硬编码的错误消息：
+
+```dart
+// 不推荐的做法
+throw ArgumentError('用户名不能为空');
+
+// 推荐的做法
+throw ValidationException(
+  code: AppErrorCode.userNameRequired,
+  message: 'User name is required',
+  details: {'field': 'name'},
+);
+```
+
+在UI层，使用`ErrorMessageUtils`来显示本地化的错误消息：
+
+```dart
+try {
+  // 调用用例
+} catch (e) {
+  ErrorMessageUtils.showErrorSnackbar(context, e);
+}
+```
+
+### 本地化常量助手
+
+为了方便访问常用的本地化文本，本项目提供了`LocalizedConstantsHelper`类，通过`context.consts`可以快速访问各种类型的本地化文本：
+
+- **加载状态文本**: `context.consts.loadingText`, `context.consts.errorText`, `context.consts.emptyText`
+- **页面标题**: `context.consts.pageTitleUserList`, `context.consts.pageTitleProfile`等
+- **按钮文本**: `context.consts.buttonAdd`, `context.consts.buttonSave`等
+- **确认对话框文本**: `context.consts.confirmDeleteTitle`, `context.consts.confirmDeleteMessage`等
+- **用户相关文本**: `context.consts.userName`, `context.consts.userEmail`等
+- **验证文本**: `context.consts.validationNameRequired`, `context.consts.validationEmailInvalid`等
+- **操作结果文本**: `context.consts.successUserAdded`, `context.consts.errorUserAddFailed`等
+- **设置相关文本**: `context.consts.darkMode`, `context.consts.language`等
+- **功能未实现文本**: `context.consts.editUserFunctionNotImplemented`等
+
+这种方式的优势是代码更简洁、更易于维护，并且提供了完整的类型安全。
+
+### 项目配置
+
+本项目的多语言配置位于`l10n.yaml`文件中：
+```yaml
+arb-dir: lib/src/common/l10n
+# 模板文件
+template-arb-file: app_en.arb
+# 支持的语言列表
+supported-locales: [en, zh, zh_TW]
+# 生成的文件名（带有.g.dart后缀表示自动生成的文件）
+output-localization-file: app_localizations.g.dart
+# 生成的类名
+output-class: AppLocalizations
+# 是否使用延迟加载
+use-deferred-loading: false
 ```
 
 ## 注意事项
@@ -124,4 +227,5 @@ Text(localizations?.appName ?? 'Default Text');
 - 本项目使用Provider作为状态管理库，这是Flutter中实现MVVM模式的常用方式
 - 为了简化，项目中使用了模拟数据和延迟操作来模拟网络请求
 - 实际项目中，建议添加错误处理、日志记录等功能
-- 多语言支持使用Flutter Intl插件自动生成代码，而不是手动加载ARB文件
+- 多语言支持完全使用Flutter Intl插件自动生成代码，不需要手动维护本地化字符串类
+- 添加新的本地化字符串后，只需更新ARB文件并重新运行生成脚本即可，无需手动修改代码

@@ -1,26 +1,30 @@
 // 个人资料页面
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../common/constants/app_constants.dart';
 import '../../../common/utils/common_utils.dart';
-import '../../../common/l10n/app_localizations.dart';
+import '../../../common/extensions/context_extensions.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
     
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations?.pageTitleProfile ?? 'Profile'),
+        title: Text(context.localizations.pageTitleProfile),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              CommonUtils.showSnackbar(context, '设置功能尚未实现');
-            },
-            tooltip: localizations?.pageTitleSettings ?? 'Settings',
+                CommonUtils.showSnackbar(
+                  context,
+                  context.localizations.settingsFunctionNotImplemented
+                );
+              },
+            tooltip: context.localizations.pageTitleSettings,
           ),
         ],
       ),
@@ -45,7 +49,10 @@ class ProfileScreen extends StatelessWidget {
                       child: IconButton(
                         icon: const Icon(Icons.camera_alt, color: Colors.white, size: 16),
                         onPressed: () {
-                          CommonUtils.showSnackbar(context, '更换头像功能尚未实现');
+                          CommonUtils.showSnackbar(
+                            context,
+                            context.localizations.changeAvatarFunctionNotImplemented
+                          );
                         },
                       ),
                     ),
@@ -70,31 +77,40 @@ class ProfileScreen extends StatelessWidget {
             // 功能列表
             _buildProfileItem(
               context, 
-              localizations?.personalInfo ?? 'Personal Information', 
+              context.localizations.personalInfo, 
               Icons.person, 
               () {
-                CommonUtils.showSnackbar(context, '编辑个人信息功能尚未实现');
+                CommonUtils.showSnackbar(
+                  context,
+                  context.localizations.editProfileFunctionNotImplemented
+                );
               }
             ),
             _buildProfileItem(
               context, 
-              localizations?.accountSecurity ?? 'Account Security', 
+              context.localizations.accountSecurity, 
               Icons.security, 
               () {
-                CommonUtils.showSnackbar(context, '账号安全功能尚未实现');
+                CommonUtils.showSnackbar(
+                  context,
+                  context.localizations.accountSecurityFunctionNotImplemented
+                );
               }
             ),
             _buildProfileItem(
               context, 
-              localizations?.notificationSettings ?? 'Notification Settings', 
+              context.localizations.notificationSettings, 
               Icons.notifications, 
               () {
-                CommonUtils.showSnackbar(context, '通知设置功能尚未实现');
+                CommonUtils.showSnackbar(
+                  context,
+                  context.localizations.notificationSettingsFunctionNotImplemented
+                );
               }
             ),
             _buildProfileItem(
               context, 
-              localizations?.pageTitleAbout ?? 'About Us', 
+              context.localizations.pageTitleAbout, 
               Icons.info, 
               () {
                 Navigator.pushNamed(context, '/about');
@@ -109,18 +125,21 @@ class ProfileScreen extends StatelessWidget {
                 onPressed: () {
                   CommonUtils.showConfirmationDialog(
                     context, 
-                    localizations?.confirmLogoutTitle ?? 'Logout', 
-                    localizations?.confirmLogoutMessage ?? 'Are you sure you want to logout?',
+                    context.localizations.confirmLogoutTitle, 
+                    context.localizations.confirmLogoutMessage,
                   ).then((confirmed) {
                     if (confirmed) {
-                      CommonUtils.showSnackbar(context, '退出登录功能尚未实现');
-                    }
+                        CommonUtils.showSnackbar(
+                          context,
+                          context.localizations.logoutFunctionNotImplemented
+                        );
+                      }
                   });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                 ),
-                child: Text(localizations?.buttonLogout ?? 'Logout'),
+                child: Text(context.localizations.buttonLogout),
               ),
             ),
           ],

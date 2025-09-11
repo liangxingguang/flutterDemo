@@ -2,6 +2,7 @@
 
 import '../entities/user.dart';
 import '../repositories/user_repository.dart';
+import '../exceptions/app_exception.dart';
 
 class UpdateUserUsecase {
   final UserRepository _userRepository;
@@ -12,15 +13,35 @@ class UpdateUserUsecase {
     try {
       // 参数验证
       if (user.id <= 0) {
-        throw ArgumentError('用户ID必须大于0');
+        throw ValidationException(
+          code: AppErrorCode.userIdInvalid,
+          message: 'User ID must be greater than 0',
+          details: {'userId': user.id},
+        );
       }
       
       if (user.name.isEmpty) {
-        throw ArgumentError('用户名不能为空');
+        throw ValidationException(
+          code: AppErrorCode.userNameRequired,
+          message: 'User name is required',
+          details: {'field': 'name'},
+        );
       }
       
-      if (user.email.isEmpty || !user.email.contains('@')) {
-        throw ArgumentError('请输入有效的邮箱地址');
+      if (user.email.isEmpty) {
+        throw ValidationException(
+          code: AppErrorCode.userEmailRequired,
+          message: 'Email is required',
+          details: {'field': 'email'},
+        );
+      }
+      
+      if (!user.email.contains('@')) {
+        throw ValidationException(
+          code: AppErrorCode.userEmailInvalid,
+          message: 'Invalid email format',
+          details: {'field': 'email', 'value': user.email},
+        );
       }
       
       // 添加更新时间

@@ -2,6 +2,7 @@
 
 import '../entities/user.dart';
 import '../repositories/user_repository.dart';
+import '../exceptions/app_exception.dart';
 
 class CreateUserUsecase {
   final UserRepository _userRepository;
@@ -12,11 +13,26 @@ class CreateUserUsecase {
     try {
       // 参数验证
       if (user.name.isEmpty) {
-        throw ArgumentError('用户名不能为空');
+        throw ValidationException(
+          code: AppErrorCode.userNameRequired,
+          message: 'User name is required',
+        );
       }
       
-      if (user.email.isEmpty || !user.email.contains('@')) {
-        throw ArgumentError('请输入有效的邮箱地址');
+      if (user.email.isEmpty) {
+        throw ValidationException(
+          code: AppErrorCode.userEmailRequired,
+          message: 'Email is required',
+          details: {'field': 'email'},
+        );
+      }
+      
+      if (!user.email.contains('@')) {
+        throw ValidationException(
+          code: AppErrorCode.userEmailInvalid,
+          message: 'Invalid email format',
+          details: {'field': 'email', 'value': user.email},
+        );
       }
       
       // 添加创建时间

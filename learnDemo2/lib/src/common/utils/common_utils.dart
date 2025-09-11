@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import '../constants/app_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../extensions/context_extensions.dart';
 
 class CommonUtils {
   // 显示加载对话框
@@ -47,7 +49,6 @@ class CommonUtils {
     String title,
     String message,
   ) async {
-    final localizations = AppLocalizations.of(context);
     
     return await showDialog<bool>(
       context: context,
@@ -57,13 +58,13 @@ class CommonUtils {
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Text(localizations?.buttonCancel ?? 'Cancel'),
+              child: Text(context.localizations.buttonCancel),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
             ),
             TextButton(
-              child: Text(localizations?.buttonConfirm ?? 'Confirm'),
+              child: Text(context.localizations.buttonConfirm),
               onPressed: () {
                 Navigator.of(context).pop(true);
               },

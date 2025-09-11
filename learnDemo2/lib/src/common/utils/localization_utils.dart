@@ -2,7 +2,7 @@
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import '../../common/l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocalizationUtils {
   // 格式化日期
@@ -17,7 +17,7 @@ class LocalizationUtils {
       
       if (useRelative) {
         // 使用相对时间（如：1小时前，2天前等）
-        return _formatRelativeTime(dateTime, localeCode);
+        return _formatRelativeTime(context, dateTime);
       }
       
       // 根据语言设置不同的日期格式
@@ -83,73 +83,71 @@ class LocalizationUtils {
   }
 
   // 格式化相对时间
-  static String _formatRelativeTime(DateTime dateTime, String localeCode) {
+  static String _formatRelativeTime(BuildContext context, DateTime dateTime) {
     try {
+      final localizations = AppLocalizations.of(context);
+      if (localizations == null) {
+        // 如果无法获取本地化实例，返回默认格式的日期时间
+        return dateTime.toString();
+      }
+      
       final now = DateTime.now();
       final difference = now.difference(dateTime);
       
       // 小于1分钟
       if (difference.inMinutes < 1) {
-        return Intl.message('just now', name: 'justNow', locale: localeCode);
+        return localizations.justNow;
       }
       
       // 小于1小时
       if (difference.inHours < 1) {
         final minutes = difference.inMinutes;
-        return Intl.plural(
-          minutes,
-          zero: '0 minutes ago',
-          one: '1 minute ago',
-          other: '$minutes minutes ago',
-          locale: localeCode,
-        );
+        // 在实际应用中，您应该在AppLocalizations中添加相应的复数形式方法
+        // 这里为了简化，直接使用字符串拼接
+        if (minutes == 1) {
+          return localizations.oneMinuteAgo;
+        } else {
+          return '${minutes} ${localizations.minutesAgo}';
+        }
       }
       
       // 小于1天
       if (difference.inDays < 1) {
         final hours = difference.inHours;
-        return Intl.plural(
-          hours,
-          zero: '0 hours ago',
-          one: '1 hour ago',
-          other: '$hours hours ago',
-          locale: localeCode,
-        );
+        if (hours == 1) {
+          return localizations.oneHourAgo;
+        } else {
+          return '${hours} ${localizations.hoursAgo}';
+        }
       }
       
       // 小于30天
       if (difference.inDays < 30) {
         final days = difference.inDays;
-        return Intl.plural(
-          days,
-          zero: '0 days ago',
-          one: '1 day ago',
-          other: '$days days ago',
-          locale: localeCode,
-        );
+        if (days == 1) {
+          return localizations.oneDayAgo;
+        } else {
+          return '${days} ${localizations.daysAgo}';
+        }
       }
       
       // 小于1年
       if (difference.inDays < 365) {
         final months = (difference.inDays / 30).floor();
-        return Intl.plural(
-          months,
-          zero: '0 months ago',
-          one: '1 month ago',
-          other: '$months months ago',
-          locale: localeCode,
-        );
+        if (months == 1) {
+          return localizations.oneMonthAgo;
+        } else {
+          return '${months} ${localizations.monthsAgo}';
+        }
       }
       
       // 大于等于1年
       final years = (difference.inDays / 365).floor();
-      return Intl.plural(
-        years,
-        zero: '0 years ago',
-        one: '1 year ago',
-        other: '$years years ago',
-        locale: localeCode,
-      );
+      if (years == 1) {
+        return localizations.oneYearAgo;
+      } else {
+        return '${years} ${localizations.yearsAgo}';
+      }
     } catch (e) {
       print('Failed to format relative time: $e');
       return dateTime.toString();
