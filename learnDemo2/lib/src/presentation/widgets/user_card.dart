@@ -1,7 +1,7 @@
 // 用户卡片组件
 
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../../common/l10n/generated/l10n.dart';
 import '../../domain/entities/user.dart';
 
 class UserCard extends StatelessWidget {

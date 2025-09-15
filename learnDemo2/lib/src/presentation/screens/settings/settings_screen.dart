@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../../../common/l10n/generated/l10n.dart';
 import '../../providers/language_provider.dart';
 
 import 'language_settings_screen.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../../../common/l10n/generated/l10n.dart';
 import 'package:provider/provider.dart';
-import 'package:learnDemo2/src/presentation/providers/language_provider.dart';
+import '../../providers/language_provider.dart';
 
 class LanguageSettingsScreen extends StatelessWidget {
   const LanguageSettingsScreen({Key? key}) : super(key: key);

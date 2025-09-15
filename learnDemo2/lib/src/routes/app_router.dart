@@ -1,7 +1,7 @@
 // 应用路由配置
 
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../common/l10n/generated/l10n.dart';
 import '../routes/route_paths.dart';
 import '../presentation/screens/home/user_list_screen.dart';
 import '../presentation/screens/profile/profile_screen.dart';

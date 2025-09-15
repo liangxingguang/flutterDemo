@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '/src/common/l10n/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'src/config/app_theme.dart';

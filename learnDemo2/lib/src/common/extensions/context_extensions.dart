@@ -1,7 +1,7 @@
 // 针对BuildContext的扩展方法
 
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../l10n/generated/l10n.dart';
 import '../constants/localized_constants.dart';
 
 // 对BuildContext的扩展，提供便捷的方法获取本地化实例

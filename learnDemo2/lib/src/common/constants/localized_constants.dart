@@ -2,7 +2,7 @@
 // 提供访问本地化文本常量的方法
 
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../l10n/generated/l10n.dart';
 
 // 本地化常量工具类
 class LocalizedConstants {

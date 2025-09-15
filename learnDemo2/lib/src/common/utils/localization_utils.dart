@@ -2,7 +2,7 @@
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../l10n/generated/l10n.dart';
 
 import '../constants/app_constants.dart';
 
@@ -13,7 +13,7 @@ class LocalizationUtils {
     bool useRelative = false,
   }) {
     try {
-      final locale = const Locale(AppConstants.defaultLanguageCodeEn); // 简化处理，使用默认语言
+      const locale = Locale(AppConstants.defaultLanguageCodeEn); // 简化处理，使用默认语言
       final localeCode = locale.languageCode;
       
       if (useRelative) {

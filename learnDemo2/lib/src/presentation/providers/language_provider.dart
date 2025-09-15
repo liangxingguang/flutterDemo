@@ -2,9 +2,9 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/constants/app_constants.dart';
+import '../../common/constants/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../../common/l10n/generated/l10n.dart';
 
 class LanguageProvider extends ChangeNotifier {
   // 语言偏好设置的键
