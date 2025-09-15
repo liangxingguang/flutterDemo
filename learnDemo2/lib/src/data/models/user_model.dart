@@ -1,5 +1,7 @@
 // 用户数据模型
 
+import '../../domain/entities/user.dart';
+
 class UserModel {
   final int id;
   final String name;
@@ -89,5 +91,31 @@ class UserModel {
   @override
   String toString() {
     return 'UserModel(id: $id, name: $name, email: $email)';
+  }
+
+  // 转换为领域实体
+  User toEntity() {
+    return User(
+      id: id,
+      name: name,
+      email: email,
+      avatar: avatar,
+      phone: phone,
+      createdAt: createdAt ?? DateTime.now(),
+      updatedAt: updatedAt,
+    );
+  }
+
+  // 从领域实体创建UserModel
+  static UserModel fromEntity(User user) {
+    return UserModel(
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+      phone: user.phone,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    );
   }
 }

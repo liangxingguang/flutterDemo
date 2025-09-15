@@ -20,8 +20,8 @@ class GetUsersUsecase {
       // 调用Repository获取用户列表
       final users = await _userRepository.getUsers();
       
-      // 确保返回非空列表
-      return users ?? [];
+      // 返回用户列表
+      return users;
     } catch (e) {
       // 添加更具体的错误处理逻辑
       print('获取用户列表用例执行失败: $e');

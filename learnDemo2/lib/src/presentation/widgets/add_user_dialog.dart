@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:learnDemo2/src/common/l10n/app_localizations.dart';
-import '../../providers/user_provider.dart';
-import '../../../common/utils/common_utils.dart';
+import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../providers/user_provider.dart';
+import '../../common/utils/common_utils.dart';
 
 class AddUserDialog extends StatefulWidget {
   const AddUserDialog({Key? key}) : super(key: key);
@@ -48,17 +48,17 @@ class _AddUserDialogState extends State<AddUserDialog> {
         Navigator.of(context).pop();
         
         // 显示成功提示
-        final localizations = AppLocalizations.of(context);
-        CommonUtils.showSnackbar(
+        final localizations = S.of(context);
+        CommonUtils.showSnackBar(
           context, 
-          localizations?.successUserAdded ?? 'User added successfully'
+          localizations.successUserAdded
         );
       } catch (e) {
         // 处理添加失败的情况
-        final localizations = AppLocalizations.of(context);
-        CommonUtils.showSnackbar(
+        final localizations = S.of(context);
+        CommonUtils.showSnackBar(
           context, 
-          '${localizations?.errorUserAddFailed ?? 'Failed to add user'}: $e'
+          '${localizations.errorUserAddFailed}: $e'
         );
       } finally {
         setState(() {
@@ -70,10 +70,10 @@ class _AddUserDialogState extends State<AddUserDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = S.of(context);
     
     return AlertDialog(
-      title: Text(localizations?.pageTitleAddUser ?? 'Add User'),
+      title: Text(localizations.pageTitleAddUser),
       content: Form(
         key: _formKey,
         child: Column(
@@ -81,32 +81,32 @@ class _AddUserDialogState extends State<AddUserDialog> {
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: localizations?.userName ?? 'Name'),
+              decoration: InputDecoration(labelText: localizations.userName),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return localizations?.validationNameRequired ?? 'Please enter name';
+                  return localizations.validationNameRequired;
                 }
                 return null;
               },
             ),
             TextFormField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: localizations?.userEmail ?? 'Email'),
+              decoration: InputDecoration(labelText: localizations.userEmail),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return localizations?.validationEmailRequired ?? 'Please enter email';
+                  return localizations.validationEmailRequired;
                 }
                 // 简单的邮箱格式验证
                 if (!CommonUtils.isValidEmail(value)) {
-                  return localizations?.validationEmailInvalid ?? 'Please enter a valid email address';
+                  return localizations.validationEmailInvalid;
                 }
                 return null;
               },
             ),
             TextFormField(
               controller: _phoneController,
-              decoration: InputDecoration(labelText: localizations?.userPhone ?? 'Phone (optional)'),
+              decoration: InputDecoration(labelText: localizations.userPhone),
               keyboardType: TextInputType.phone,
             ),
           ],
@@ -114,15 +114,14 @@ class _AddUserDialogState extends State<AddUserDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(localizations?.buttonCancel ?? 'Cancel'),
-          enabled: !_isSubmitting,
+          onPressed: _isSubmitting ? null : () => Navigator.of(context).pop(),
+          child: Text(localizations.buttonCancel),
         ),
         ElevatedButton(
           onPressed: _isSubmitting ? null : _submitForm,
           child: _isSubmitting
               ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-              : Text(localizations?.buttonAdd ?? 'Add'),
+              : Text(localizations.buttonAdd),
         ),
       ],
     );

@@ -89,10 +89,7 @@ class ServerException extends AppException {
   }) : super(
           code: code,
           message: message ?? 'Server error',
-          details: {
-            'statusCode': statusCode,
-            'originalDetails': details,
-          },
+          details: null,
         );
 }
 

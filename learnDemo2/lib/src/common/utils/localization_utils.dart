@@ -2,7 +2,9 @@
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+
+import '../constants/app_constants.dart';
 
 class LocalizationUtils {
   // 格式化日期
@@ -11,8 +13,7 @@ class LocalizationUtils {
     bool useRelative = false,
   }) {
     try {
-      final localizations = AppLocalizations.of(context);
-      final locale = localizations?.locale ?? const Locale('en');
+      final locale = const Locale(AppConstants.defaultLanguageCodeEn); // 简化处理，使用默认语言
       final localeCode = locale.languageCode;
       
       if (useRelative) {
@@ -35,8 +36,7 @@ class LocalizationUtils {
   // 格式化日期和时间
   static String formatDateTime(BuildContext context, DateTime dateTime) {
     try {
-      final localizations = AppLocalizations.of(context);
-      final locale = localizations?.locale ?? const Locale('en');
+      final locale = const Locale(AppConstants.defaultLanguageCodeEn); // 简化处理，使用默认语言
       final dateFormat = DateFormat.yMMMd(locale.languageCode)
           .addPattern(' ')
           .add_Hm();
@@ -54,8 +54,7 @@ class LocalizationUtils {
     bool asCurrency = false,
   }) {
     try {
-      final localizations = AppLocalizations.of(context);
-      final locale = localizations?.locale ?? const Locale('en');
+      final locale = const Locale(AppConstants.defaultLanguageCodeEn); // 简化处理，使用默认语言
       final localeCode = locale.languageCode;
       
       NumberFormat formatter;
@@ -85,11 +84,7 @@ class LocalizationUtils {
   // 格式化相对时间
   static String _formatRelativeTime(BuildContext context, DateTime dateTime) {
     try {
-      final localizations = AppLocalizations.of(context);
-      if (localizations == null) {
-        // 如果无法获取本地化实例，返回默认格式的日期时间
-        return dateTime.toString();
-      }
+      final localizations = S.of(context);
       
       final now = DateTime.now();
       final difference = now.difference(dateTime);
@@ -152,12 +147,5 @@ class LocalizationUtils {
       print('Failed to format relative time: $e');
       return dateTime.toString();
     }
-  }
-
-  // 获取当前地区的数字格式信息
-  static NumberFormatSymbols getNumberFormatSymbols(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-    final locale = localizations?.locale ?? const Locale('en');
-    return NumberFormatSymbols(locale: locale.languageCode);
   }
 }

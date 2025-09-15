@@ -2,16 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import '../constants/app_constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../extensions/context_extensions.dart';
+
 
 class CommonUtils {
   // 显示加载对话框
   static Future<void> showLoadingDialog(BuildContext context, {
-    String message = AppConstants.loadingText,
+    String? message,
   }) async {
+    final loadingMessage = message ?? context.localizations.loadingText;
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -21,7 +23,7 @@ class CommonUtils {
             children: [
               const CircularProgressIndicator(),
               const SizedBox(width: 16.0),
-              Text(message),
+              Text(loadingMessage),
             ],
           ),
         );
@@ -30,7 +32,7 @@ class CommonUtils {
   }
 
   // 显示消息提示
-  static void showSnackbar(BuildContext context, String message, {
+  static void showSnackBar(BuildContext context, String message, {
     Color? backgroundColor,
     Duration duration = const Duration(seconds: 3),
   }) {
@@ -87,7 +89,7 @@ class CommonUtils {
 
   // 验证邮箱格式
   static bool isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final emailRegex = RegExp(AppConstants.emailRegex);
     return emailRegex.hasMatch(email);
   }
 

@@ -1,7 +1,6 @@
 // 用户实体类
 
 import 'package:hive/hive.dart';
-import '../../data/local/hive_adapters/user_hive_adapter.dart';
 
 part 'user.g.dart'; // 这将由Hive生成
 

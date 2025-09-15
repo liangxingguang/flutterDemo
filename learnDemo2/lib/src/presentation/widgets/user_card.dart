@@ -1,11 +1,11 @@
 // 用户卡片组件
 
 import 'package:flutter/material.dart';
-import '../../../domain/entities/user.dart';
-import 'package:learnDemo2/src/common/l10n/app_localizations.dart';
+import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
+import '../../domain/entities/user.dart';
 
 class UserCard extends StatelessWidget {
-  final dynamic user; // 在实际项目中，这里应该使用具体的User类型
+  final User user;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
@@ -18,11 +18,13 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = S.of(context);
     
     return Card(
       elevation: 4.0,
-      borderRadius: BorderRadius.circular(8.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -32,7 +34,7 @@ class UserCard extends StatelessWidget {
             // 用户头像
             CircleAvatar(
               radius: 32,
-              backgroundImage: NetworkImage(user.avatar ?? 'https://picsum.photos/id/1005/200/200'),
+              backgroundImage: NetworkImage(user.avatar),
               child: const Icon(Icons.person),
             ),
             const SizedBox(width: 16),
@@ -44,12 +46,12 @@ class UserCard extends StatelessWidget {
                 children:
                 [
                   Text(
-                    user.name ?? (localizations?.unknownUser ?? 'Unknown User'),
+                    user.name,
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    user.email ?? (localizations?.unknownEmail ?? 'Unknown Email'),
+                    user.email,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   if (user.phone != null && user.phone!.isNotEmpty) ...[
@@ -70,12 +72,12 @@ class UserCard extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.edit, color: Colors.blue),
                   onPressed: onEdit,
-                  tooltip: localizations?.buttonEdit ?? 'Edit',
+                  tooltip: localizations.buttonEdit,
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
                   onPressed: onDelete,
-                  tooltip: localizations?.buttonDelete ?? 'Delete',
+                  tooltip: localizations.buttonDelete,
                 ),
               ],
             ),

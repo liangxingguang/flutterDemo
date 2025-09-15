@@ -1,21 +1,18 @@
 // 针对BuildContext的扩展方法
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../l10n/default_localizations.dart';
+import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
 import '../constants/localized_constants.dart';
 
 // 对BuildContext的扩展，提供便捷的方法获取本地化实例
 extension ContextLocalizations on BuildContext {
   // 获取本地化实例，如果为空则返回默认实例
-  AppLocalizations get localizations {
-    final defaultLocales = DefaultLocalizations.instance;
-    final currentLocales = AppLocalizations.of(this);
-    return defaultLocales.orDefault(currentLocales);
+  S get localizations {
+    return S.of(this);
   }
 
   // 获取字符串资源的快捷方法
-  String t(String Function(AppLocalizations) getter) {
+  String t(String Function(S) getter) {
     return getter(localizations);
   }
 
@@ -95,12 +92,4 @@ class LocalizedConstantsHelper {
   String get accountSecurityFunctionNotImplemented => LocalizedConstants.accountSecurityFunctionNotImplemented(_context);
   String get notificationSettingsFunctionNotImplemented => LocalizedConstants.notificationSettingsFunctionNotImplemented(_context);
   String get logoutFunctionNotImplemented => LocalizedConstants.logoutFunctionNotImplemented(_context);
-}
-
-// 对AppLocalizations?的扩展，提供安全的访问方法
-extension AppLocalizationsNullable on AppLocalizations? {
-  // 获取安全的本地化实例，如果为空则返回默认实例
-  AppLocalizations get safe {
-    return DefaultLocalizations.instance.orDefault(this);
-  }
 }

@@ -1,7 +1,7 @@
 // 应用路由配置
 
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/app_localizations.dart';
+import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
 import '../routes/route_paths.dart';
 import '../presentation/screens/home/user_list_screen.dart';
 import '../presentation/screens/profile/profile_screen.dart';
@@ -36,11 +36,11 @@ class AppRouter {
         // 简单的关于页面
         return MaterialPageRoute(
           builder: (context) {
-            final localizations = AppLocalizations.of(context);
+            final localizations = S.of(context);
             return Scaffold(
-              appBar: AppBar(title: Text(localizations?.pageTitleAbout ?? 'About Us')),
+              appBar: AppBar(title: Text(localizations.pageTitleAbout)),
               body: Center(
-                child: Text(localizations?.appDescription ?? 'Flutter MVVM + Repository Demo App'),
+                child: Text(localizations.appDescription),
               ),
             );
           },
@@ -56,16 +56,16 @@ class AppRouter {
   static Route<dynamic> _buildUnknownRoute(RouteSettings settings) {
     return MaterialPageRoute(
       builder: (context) {
-        final localizations = AppLocalizations.of(context);
+        final localizations = S.of(context);
         return Scaffold(
           appBar: AppBar(
-            title: Text(localizations?.pageNotFound ?? 'Page Not Found'),
+            title: Text(localizations.pageNotFound),
           ),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('${localizations?.pageNotFoundMessage ?? 'Cannot find page'}: ${settings.name}'),
+                Text('${localizations.pageNotFoundMessage}: ${settings.name}'),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -73,7 +73,7 @@ class AppRouter {
                       (route) => false,
                     );
                   },
-                  child: Text(localizations?.backToHome ?? 'Back to Home'),
+                  child: Text(localizations.backToHome),
                 ),
               ],
             ),

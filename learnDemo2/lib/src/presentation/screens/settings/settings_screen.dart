@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:learnDemo2/src/common/l10n/app_localizations.dart';
+import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
 import '../../providers/language_provider.dart';
-import '../../../common/utils/common_utils.dart';
-import '../../../common/extensions/context_extensions.dart';
+
+import 'language_settings_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.localizations.pageTitleSettings),
+        title: Text(S.of(context).pageTitleSettings),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -27,10 +27,17 @@ class SettingsScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16.0),
             child: ListTile(
               leading: const Icon(Icons.language),
-              title: Text(context.localizations.language),
-              subtitle: Text(languageProvider.currentLanguageDisplayName),
+              title: Text(S.of(context).language),
+              subtitle: Text(languageProvider.getCurrentLanguageDisplayName(context)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () => _showLanguageSelectionDialog(context, languageProvider),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LanguageSettingsScreen(),
+                  ),
+                );
+              },
             ),
           ),
           
@@ -40,14 +47,14 @@ class SettingsScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16.0),
             child: ListTile(
               leading: const Icon(Icons.dark_mode),
-              title: Text(context.localizations.darkMode),
+              title: Text(S.of(context).darkMode),
               trailing: Switch.adaptive(
                 value: MediaQuery.of(context).platformBrightness == Brightness.dark,
                 onChanged: (value) {
-                  final localizations = AppLocalizations.of(context);
-                  CommonUtils.showSnackbar(
-                    context,
-                    localizations?.themeSwitchFunctionNotImplemented ?? 'Theme switch function not implemented'
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(S.of(context).themeSwitchFunctionNotImplemented),
+                    ),
                   );
                 },
               ),
@@ -60,7 +67,7 @@ class SettingsScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16.0),
             child: ListTile(
               leading: const Icon(Icons.info),
-              title: Text(context.localizations.pageTitleAbout),
+              title: Text(S.of(context).pageTitleAbout),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Navigator.pushNamed(context, '/about');
@@ -72,34 +79,5 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // 显示语言选择对话框
-  void _showLanguageSelectionDialog(BuildContext context, LanguageProvider languageProvider) {
-    
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(context.localizations.language),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: languageProvider.supportedLocales.map((locale) {
-              final isSelected = locale == languageProvider.currentLocale;
-              return RadioListTile<Locale>(
-                title: Text(languageProvider.getLanguageDisplayNameDeprecated(locale)),
-                value: locale,
-                groupValue: languageProvider.currentLocale,
-                onChanged: (value) {
-                  if (value != null) {
-                    languageProvider.setLanguage(value);
-                    Navigator.of(context).pop();
-                  }
-                },
-                selected: isSelected,
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  }
+
 }

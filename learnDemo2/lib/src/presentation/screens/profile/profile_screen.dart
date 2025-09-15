@@ -1,7 +1,6 @@
 // 个人资料页面
 
 import 'package:flutter/material.dart';
-import 'package:learnDemo2/src/common/l10n/app_localizations.dart';
 import '../../../common/constants/app_constants.dart';
 import '../../../common/utils/common_utils.dart';
 import '../../../common/extensions/context_extensions.dart';
@@ -19,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-                CommonUtils.showSnackbar(
+                CommonUtils.showSnackBar(
                   context,
                   context.localizations.settingsFunctionNotImplemented
                 );
@@ -49,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                       child: IconButton(
                         icon: const Icon(Icons.camera_alt, color: Colors.white, size: 16),
                         onPressed: () {
-                          CommonUtils.showSnackbar(
+                          CommonUtils.showSnackBar(
                             context,
                             context.localizations.changeAvatarFunctionNotImplemented
                           );
@@ -80,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
               context.localizations.personalInfo, 
               Icons.person, 
               () {
-                CommonUtils.showSnackbar(
+                CommonUtils.showSnackBar(
                   context,
                   context.localizations.editProfileFunctionNotImplemented
                 );
@@ -91,7 +90,7 @@ class ProfileScreen extends StatelessWidget {
               context.localizations.accountSecurity, 
               Icons.security, 
               () {
-                CommonUtils.showSnackbar(
+                CommonUtils.showSnackBar(
                   context,
                   context.localizations.accountSecurityFunctionNotImplemented
                 );
@@ -102,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
               context.localizations.notificationSettings, 
               Icons.notifications, 
               () {
-                CommonUtils.showSnackbar(
+                CommonUtils.showSnackBar(
                   context,
                   context.localizations.notificationSettingsFunctionNotImplemented
                 );
@@ -129,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
                     context.localizations.confirmLogoutMessage,
                   ).then((confirmed) {
                     if (confirmed) {
-                        CommonUtils.showSnackbar(
+                        CommonUtils.showSnackBar(
                           context,
                           context.localizations.logoutFunctionNotImplemented
                         );

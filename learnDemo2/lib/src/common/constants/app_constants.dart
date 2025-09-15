@@ -20,4 +20,14 @@ class AppConstants {
   // 缓存键名
   static const String cacheKeyUsers = 'users';
   static const String cacheKeyUserDetail = 'user_detail_';
+  
+  // 缓存时间（秒）
+  static const int cacheMaxAge = 300; // 5分钟
+
+  static const String defaultLanguageCodeEn = 'en';
+  static const String defaultLanguageCodeZh = 'zh';
+
+  static const String cacheDir = 'cache';
+
+  static const String emailRegex = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
 }

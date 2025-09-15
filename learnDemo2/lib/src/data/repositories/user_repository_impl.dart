@@ -6,6 +6,7 @@ import '../../api/services/user_api_service.dart';
 import '../models/user_model.dart';
 import '../../domain/repositories/user_repository.dart';
 import '../../common/constants/app_constants.dart';
+import '../../domain/entities/user.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserApiService _userApiService;
@@ -19,22 +20,25 @@ class UserRepositoryImpl implements UserRepository {
 
   // 获取用户列表
   @override
-  Future<List<UserModel>> getUsers() async {
+  Future<List<User>> getUsers() async {
     try {
       // 先尝试从缓存获取数据
       final cachedUsers = await _getCachedUsers();
       if (cachedUsers != null) {
-        return cachedUsers;
+        return cachedUsers.map((model) => model.toEntity()).toList();
       }
 
       // 缓存不存在或已过期，从API获取数据
       final response = await _userApiService.getUsers();
       final users = (response['data'] as List)
           .map((userJson) => UserModel.fromJson(userJson))
+          .map((model) => model.toEntity())
           .toList();
 
       // 缓存获取到的数据
-      await _cacheUsers(users);
+      await _cacheUsers((response['data'] as List)
+          .map((userJson) => UserModel.fromJson(userJson))
+          .toList());
 
       return users;
     } catch (e) {
@@ -42,7 +46,7 @@ class UserRepositoryImpl implements UserRepository {
       // 如果网络请求失败，但有缓存数据，则返回缓存数据
       final cachedUsers = await _getCachedUsers();
       if (cachedUsers != null) {
-        return cachedUsers;
+        return cachedUsers.map((model) => model.toEntity()).toList();
       }
       rethrow;
     }
@@ -50,12 +54,12 @@ class UserRepositoryImpl implements UserRepository {
 
   // 获取单个用户
   @override
-  Future<UserModel> getUserById(int id) async {
+  Future<User> getUserById(int id) async {
     try {
       // 先尝试从缓存获取数据
       final cachedUser = await _getCachedUser(id);
       if (cachedUser != null) {
-        return cachedUser;
+        return cachedUser.toEntity();
       }
 
       // 缓存不存在或已过期，从API获取数据
@@ -65,13 +69,13 @@ class UserRepositoryImpl implements UserRepository {
       // 缓存获取到的数据
       await _cacheUser(user);
 
-      return user;
+      return user.toEntity();
     } catch (e) {
       print('获取用户详情失败: $e');
       // 如果网络请求失败，但有缓存数据，则返回缓存数据
       final cachedUser = await _getCachedUser(id);
       if (cachedUser != null) {
-        return cachedUser;
+        return cachedUser.toEntity();
       }
       rethrow;
     }
@@ -79,15 +83,15 @@ class UserRepositoryImpl implements UserRepository {
 
   // 创建新用户
   @override
-  Future<UserModel> createUser(UserModel user) async {
+  Future<User> createUser(User user) async {
     try {
-      final response = await _userApiService.createUser(user.toJson());
+      final response = await _userApiService.createUser(UserModel.fromEntity(user).toJson());
       final createdUser = UserModel.fromJson(response['data']);
 
       // 更新缓存
       await _invalidateUsersCache();
 
-      return createdUser;
+      return createdUser.toEntity();
     } catch (e) {
       print('创建用户失败: $e');
       rethrow;
@@ -96,16 +100,16 @@ class UserRepositoryImpl implements UserRepository {
 
   // 更新用户
   @override
-  Future<UserModel> updateUser(UserModel user) async {
+  Future<User> updateUser(User user) async {
     try {
-      final response = await _userApiService.updateUser(user.id, user.toJson());
+      final response = await _userApiService.updateUser(user.id, UserModel.fromEntity(user).toJson());
       final updatedUser = UserModel.fromJson(response['data']);
 
       // 更新缓存
       await _invalidateUsersCache();
       await _cacheUser(updatedUser);
 
-      return updatedUser;
+      return updatedUser.toEntity();
     } catch (e) {
       print('更新用户失败: $e');
       rethrow;

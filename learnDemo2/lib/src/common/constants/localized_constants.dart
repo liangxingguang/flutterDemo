@@ -2,7 +2,7 @@
 // 提供访问本地化文本常量的方法
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learnDemo2/src/common/l10n/generated/l10n.dart';
 
 // 本地化常量工具类
 class LocalizedConstants {
@@ -11,200 +11,200 @@ class LocalizedConstants {
 
   // 获取加载状态文本
   static String loadingText(BuildContext context) {
-    return context.localizations.loadingText;
+    return S.of(context).loadingText;
   }
 
   // 获取错误状态文本
   static String errorText(BuildContext context) {
-    return context.localizations.errorText;
+    return S.of(context).errorText;
   }
 
   // 获取空状态文本
   static String emptyText(BuildContext context) {
-    return context.localizations.emptyText;
+    return S.of(context).emptyText;
   }
 
   // 获取页面标题
   static String pageTitleUserList(BuildContext context) {
-    return context.localizations.pageTitleUserList;
+    return S.of(context).pageTitleUserList;
   }
 
   static String pageTitleUserDetail(BuildContext context) {
-    return context.localizations.pageTitleUserDetail;
+    return S.of(context).pageTitleUserDetail;
   }
 
   static String pageTitleAddUser(BuildContext context) {
-    return context.localizations.pageTitleAddUser;
+    return S.of(context).pageTitleAddUser;
   }
 
   static String pageTitleEditUser(BuildContext context) {
-    return context.localizations.pageTitleEditUser;
+    return S.of(context).pageTitleEditUser;
   }
 
   static String pageTitleProfile(BuildContext context) {
-    return context.localizations.pageTitleProfile;
+    return S.of(context).pageTitleProfile;
   }
 
   static String pageTitleSettings(BuildContext context) {
-    return context.localizations.pageTitleSettings;
+    return S.of(context).pageTitleSettings;
   }
 
   static String pageTitleAbout(BuildContext context) {
-    return context.localizations.pageTitleAbout;
+    return S.of(context).pageTitleAbout;
   }
 
   // 获取按钮文本
   static String buttonRefresh(BuildContext context) {
-    return context.localizations.buttonRefresh;
+    return S.of(context).buttonRefresh;
   }
 
   static String buttonAdd(BuildContext context) {
-    return context.localizations.buttonAdd;
+    return S.of(context).buttonAdd;
   }
 
   static String buttonEdit(BuildContext context) {
-    return context.localizations.buttonEdit;
+    return S.of(context).buttonEdit;
   }
 
   static String buttonDelete(BuildContext context) {
-    return context.localizations.buttonDelete;
+    return S.of(context).buttonDelete;
   }
 
   static String buttonSave(BuildContext context) {
-    return context.localizations.buttonSave;
+    return S.of(context).buttonSave;
   }
 
   static String buttonCancel(BuildContext context) {
-    return context.localizations.buttonCancel;
+    return S.of(context).buttonCancel;
   }
 
   static String buttonRetry(BuildContext context) {
-    return context.localizations.buttonRetry;
+    return S.of(context).buttonRetry;
   }
 
   static String buttonConfirm(BuildContext context) {
-    return context.localizations.buttonConfirm;
+    return S.of(context).buttonConfirm;
   }
 
   static String buttonLogout(BuildContext context) {
-    return context.localizations.buttonLogout;
+    return S.of(context).buttonLogout;
   }
 
   // 获取确认对话框文本
   static String confirmDeleteTitle(BuildContext context) {
-    return context.localizations.confirmDeleteTitle;
+    return S.of(context).confirmDeleteTitle;
   }
 
   static String confirmDeleteMessage(BuildContext context) {
-    return context.localizations.confirmDeleteMessage;
+    return S.of(context).confirmDeleteMessage;
   }
 
   static String confirmLogoutTitle(BuildContext context) {
-    return context.localizations.confirmLogoutTitle;
+    return S.of(context).confirmLogoutTitle;
   }
 
   static String confirmLogoutMessage(BuildContext context) {
-    return context.localizations.confirmLogoutMessage;
+    return S.of(context).confirmLogoutMessage;
   }
 
   // 获取用户相关文本
   static String userName(BuildContext context) {
-    return context.localizations.userName;
+    return S.of(context).userName;
   }
 
   static String userEmail(BuildContext context) {
-    return context.localizations.userEmail;
+    return S.of(context).userEmail;
   }
 
   static String userPhone(BuildContext context) {
-    return context.localizations.userPhone;
+    return S.of(context).userPhone;
   }
 
   static String userCreatedAt(BuildContext context) {
-    return context.localizations.userCreatedAt;
+    return S.of(context).userCreatedAt;
   }
 
   static String userUpdatedAt(BuildContext context) {
-    return context.localizations.userUpdatedAt;
+    return S.of(context).userUpdatedAt;
   }
 
   // 获取验证文本
   static String validationNameRequired(BuildContext context) {
-    return context.localizations.validationNameRequired;
+    return S.of(context).validationNameRequired;
   }
 
   static String validationEmailRequired(BuildContext context) {
-    return context.localizations.validationEmailRequired;
+    return S.of(context).validationEmailRequired;
   }
 
   static String validationEmailInvalid(BuildContext context) {
-    return context.localizations.validationEmailInvalid;
+    return S.of(context).validationEmailInvalid;
   }
 
   // 获取操作结果文本
   static String successUserAdded(BuildContext context) {
-    return context.localizations.successUserAdded;
+    return S.of(context).successUserAdded;
   }
 
   static String errorUserAddFailed(BuildContext context) {
-    return context.localizations.errorUserAddFailed;
+    return S.of(context).errorUserAddFailed;
   }
 
   static String successUserUpdated(BuildContext context) {
-    return context.localizations.successUserUpdated;
+    return S.of(context).successUserUpdated;
   }
 
   static String errorUserUpdateFailed(BuildContext context) {
-    return context.localizations.errorUserUpdateFailed;
+    return S.of(context).errorUserUpdateFailed;
   }
 
   static String successUserDeleted(BuildContext context) {
-    return context.localizations.successUserDeleted;
+    return S.of(context).successUserDeleted;
   }
 
   static String errorUserDeleteFailed(BuildContext context) {
-    return context.localizations.errorUserDeleteFailed;
+    return S.of(context).errorUserDeleteFailed;
   }
 
   // 获取设置相关文本
   static String darkMode(BuildContext context) {
-    return context.localizations.darkMode;
+    return S.of(context).darkMode;
   }
 
   static String language(BuildContext context) {
-    return context.localizations.language;
+    return S.of(context).language;
   }
 
   // 获取功能未实现文本
   static String editUserFunctionNotImplemented(BuildContext context) {
-    return context.localizations.editUserFunctionNotImplemented;
+    return S.of(context).editUserFunctionNotImplemented;
   }
 
   static String themeSwitchFunctionNotImplemented(BuildContext context) {
-    return context.localizations.themeSwitchFunctionNotImplemented;
+    return S.of(context).themeSwitchFunctionNotImplemented;
   }
 
   static String settingsFunctionNotImplemented(BuildContext context) {
-    return context.localizations.settingsFunctionNotImplemented;
+    return S.of(context).settingsFunctionNotImplemented;
   }
 
   static String changeAvatarFunctionNotImplemented(BuildContext context) {
-    return context.localizations.changeAvatarFunctionNotImplemented;
+    return S.of(context).changeAvatarFunctionNotImplemented;
   }
 
   static String editProfileFunctionNotImplemented(BuildContext context) {
-    return context.localizations.editProfileFunctionNotImplemented;
+    return S.of(context).editProfileFunctionNotImplemented;
   }
 
   static String accountSecurityFunctionNotImplemented(BuildContext context) {
-    return context.localizations.accountSecurityFunctionNotImplemented;
+    return S.of(context).accountSecurityFunctionNotImplemented;
   }
 
   static String notificationSettingsFunctionNotImplemented(BuildContext context) {
-    return context.localizations.notificationSettingsFunctionNotImplemented;
+    return S.of(context).notificationSettingsFunctionNotImplemented;
   }
 
   static String logoutFunctionNotImplemented(BuildContext context) {
-    return context.localizations.logoutFunctionNotImplemented;
+    return S.of(context).logoutFunctionNotImplemented;
   }
 }

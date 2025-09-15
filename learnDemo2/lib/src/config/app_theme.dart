@@ -13,7 +13,7 @@ class AppTheme {
       foregroundColor: Colors.white,
       elevation: 4,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
@@ -31,9 +31,9 @@ class AppTheme {
       fillColor: Colors.grey[100],
     ),
     textTheme: const TextTheme(
-      headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      bodyText1: TextStyle(fontSize: 16),
-      bodyText2: TextStyle(fontSize: 14, color: Colors.grey),
+      titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      bodyLarge: TextStyle(fontSize: 16),
+      bodyMedium: TextStyle(fontSize: 14, color: Colors.grey),
     ),
   );
 
@@ -47,9 +47,9 @@ class AppTheme {
       foregroundColor: Colors.white,
       elevation: 4,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2,
-      color: Colors.grey[800],
+      color: Colors.grey[850],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -66,9 +66,9 @@ class AppTheme {
       fillColor: Colors.grey[700],
     ),
     textTheme: const TextTheme(
-      headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      bodyText1: TextStyle(fontSize: 16),
-      bodyText2: TextStyle(fontSize: 14, color: Colors.grey),
+      titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      bodyLarge: TextStyle(fontSize: 16),
+      bodyMedium: TextStyle(fontSize: 14, color: Colors.grey),
     ),
   );
 }

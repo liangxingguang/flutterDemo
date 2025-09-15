@@ -36,10 +36,10 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       // 使用本地化的应用标题
-      onGenerateTitle: (context) => S.of(context)?.appName ?? 'Flutter MVVM + Repository Demo',
+      onGenerateTitle: (context) => S.of(context).appName,
       
       // 配置本地化代理和支持的语言
-      localizationsDelegates:  const [
+      localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
