@@ -211,7 +211,7 @@ try {
 ```yaml
 arb-dir: lib/src/common/l10n
 # 模板文件
-template-arb-file: app_en.arb
+template-arb-file: intl_en.arb
 # 支持的语言列表
 supported-locales: [en, zh, zh_TW]
 # 生成的文件名（带有.g.dart后缀表示自动生成的文件）

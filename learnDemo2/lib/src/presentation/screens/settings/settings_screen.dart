@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learnDemo2/src/common/l10n/app_localizations.dart';
 import '../../providers/language_provider.dart';
 import '../../../common/utils/common_utils.dart';
 import '../../../common/extensions/context_extensions.dart';
